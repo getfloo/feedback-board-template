@@ -16,7 +16,10 @@ An internal feedback board where your sales, support and product team log custom
 Paste this into Claude Code, Codex or Cursor:
 
 ```text
-Deploy https://github.com/getfloo/feedback-board-template on floo. Follow https://getfloo.com/agents.md.
+Deploy the template at https://github.com/getfloo/feedback-board-template on floo for me.
+Follow https://getfloo.com/agents.md to create a floo-hosted project, replace its
+starter code with this template's files (keep the project's [app] name in
+floo.app.toml), push, and give me the live URL.
 ```
 
 Or do it yourself:
