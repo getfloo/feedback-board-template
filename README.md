@@ -2,6 +2,8 @@
 
 An internal feedback board where your sales, support and product team log customer feedback and feature requests, vote on what matters, and track each request from new to shipped.
 
+![Feedback board running on floo, with sample data](docs/screenshot.png)
+
 ## What you get
 
 - **Sign-in for your team, with roles.** Only people you invite can open the board. Members submit, vote and comment; admins also change status and merge duplicates.
