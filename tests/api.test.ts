@@ -148,6 +148,37 @@ describe("GET /api/items/{id}", () => {
   });
 });
 
+// An app member's own floo key reaches /api as that member, with their app role.
+const asMember = (role: string, body: BodyInit) =>
+  new Request(`http://app/api/items/${id}`, {
+    method: "PATCH",
+    body,
+    headers: {
+      "X-Floo-Auth-Method": "session",
+      "X-Floo-User-Id": "user-7",
+      "X-Floo-User-Email": "sam@example.com",
+      "X-Floo-User-Role": role,
+    },
+  });
+
+describe("PATCH /api/items/{id} with a member's floo key", () => {
+  it("refuses a member", async () => {
+    const response = await itemRoute.PATCH(asMember("member", JSON.stringify({ status: "planned" })), context);
+    expect(response.status).toBe(403);
+    expect(await expectDocumented("patch", "/api/items/{id}", response)).toEqual({
+      error: "Only app admins can change an item's status.",
+    });
+    expect(setStatus).not.toHaveBeenCalled();
+  });
+
+  it("lets an admin change the status", async () => {
+    vi.mocked(setStatus).mockResolvedValue({ ...item, status: "planned" });
+    const response = await itemRoute.PATCH(asMember("admin", JSON.stringify({ status: "planned" })), context);
+    expect(response.status).toBe(200);
+    expect(setStatus).toHaveBeenCalledWith(id, "planned");
+  });
+});
+
 describe("PATCH /api/items/{id}", () => {
   const patch = (body: BodyInit) => itemRoute.PATCH(send("PATCH", `/api/items/${id}`, body), context);
 

@@ -35,6 +35,9 @@ export class FeedbackError extends Error {
 export class NotFound extends FeedbackError {
   status = 404;
 }
+export class Forbidden extends FeedbackError {
+  status = 403;
+}
 export class Conflict extends FeedbackError {
   status = 409;
 }
@@ -94,6 +97,13 @@ export function splitTags(text: string): string[] {
 export function requireAdmin(user: User): void {
   if (user.role !== "admin") {
     throw new Error("Only app admins can change status or merge items.");
+  }
+}
+
+/** An app API key changes status like an admin; a person's own floo key on /api must be an admin. */
+export function requireStatusChanger(caller: Caller): void {
+  if (caller.kind === "user" && caller.role !== "admin") {
+    throw new Forbidden("Only app admins can change an item's status.");
   }
 }
 
