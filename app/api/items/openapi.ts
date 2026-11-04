@@ -78,6 +78,7 @@ export const operations: Operation[] = [
     responses: {
       200: { description: "The updated item.", schema: z.object({ item: ItemJson }) },
       400: { description: "The body is not JSON or the status is not valid.", schema: ApiError },
+      403: { description: "A member's own floo key; only app admins change status.", schema: ApiError },
       404: notFound,
       409: merged,
     },

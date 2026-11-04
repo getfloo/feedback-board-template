@@ -67,13 +67,13 @@ The seed only writes to an empty board and never runs on deploy. `npm test` runs
 | `/items/new` | Signed-in people | Submit form |
 | `/items/<id>` | Signed-in people | Item page with comments; status and merge controls for admins |
 | `/api-docs` | Signed-in people | The API reference |
-| `/api/*` | API keys with the `api` scope | JSON API for agents and scripts |
+| `/api/*` | Members' floo keys, and app API keys with the `api` scope | JSON API for agents and scripts |
 
-**Roles.** floo's gateway signs people in and tells the app who they are and whether they are an `admin` or `member` of the app. Status changes and merges check for `admin` on the server.
+**Roles.** floo's gateway signs people in and tells the app who they are and whether they are an `admin` or `member` of the app. Status changes and merges check for `admin` on the server, and so does a status change through `/api` with a member's own floo key.
 
 **Data model.** `items` (title, description, source, customer, tags, status, author, `merged_into_id`), `votes` (one row per item and user), `comments`, and `users` (synced from sign-in). Schema in `db/schema.ts`, migrations in `drizzle/`.
 
-**API.** Mint a key with `floo apps consumers create support-agent` and `floo apps keys create support-agent-key --consumer support-agent --scope api`, then call:
+**API.** Call it as yourself with your own floo key, or for a program, mint a key with `floo apps consumers create support-agent` and `floo apps keys create support-agent-key --consumer support-agent --scope api`, then call:
 
 | Method | Path | What |
 | --- | --- | --- |
