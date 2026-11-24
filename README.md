@@ -28,11 +28,10 @@ Or do it yourself:
 
 1. Click **Use this template** on GitHub to create your own copy of the repo.
 2. Install the CLI and sign in: `curl -fsSL https://getfloo.com/install.sh | bash`, then `floo auth login`.
-3. [Install the floo GitHub App](https://github.com/apps/getfloo/installations/new) on your repo's owner and select the repo, then run `floo apps github setup`.
-4. Connect the repo: `floo apps github connect <owner>/<repo>`. This creates the app and deploys it. Every push after that deploys again.
-5. Invite your team: `floo apps invite teammate@example.com --role member --app feedback-board`. Use `--role admin` for the people who triage.
+3. Clone your copy and run `floo deploy` in it. This connects the repo, creates the app and deploys it. If floo has no access to the repo yet, it stops with a link to install the floo GitHub App; finish that and run `floo deploy` again. Every push after that deploys again.
+4. Invite your team: `floo apps invite teammate@example.com --role member --app feedback-board`. Use `--role admin` for the people who triage.
 
-The app name comes from `name` in `floo.app.toml`; change it before connecting if you want a different one.
+The app name comes from `name` in `floo.app.toml`; change it before deploying if you want a different one.
 
 ## Customize
 
